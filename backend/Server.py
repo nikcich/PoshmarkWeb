@@ -14,7 +14,23 @@ def hello():
 @app.route("/data")
 @cross_origin()
 def data():
-    return {"Labels": ["L1", "l2", "l3"]}
+    return {"Labels": [
+        "L1",
+        "L2",
+        "L3",
+        "L4",
+        "L5",
+        "L6",
+        "L7",
+        "L8",
+        "L9",
+        "L10",
+        "L11",
+        "L12",
+        "L13",
+        "L14",
+        "L15",
+        ]}
 
 if __name__ == "__main__":
     app.run(debug=True)
