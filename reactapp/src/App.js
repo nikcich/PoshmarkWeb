@@ -1,6 +1,9 @@
 import './App.css';
+import './Carb.scss';
 
 import { useEffect, useState } from 'react';
+
+import { Button, Loading, ToastNotification } from 'carbon-components-react';
 
 function App() {
 
@@ -14,15 +17,27 @@ function App() {
 
   return (
     <div className='App'>
-      <div className="parent">
+      {/* <div className="parent">
         {data.map((item, idx) => (
           <div key={idx} className={"itemBox div" + (idx + 1)}>
             <h1 >{item}</h1>
           </div>
         ))}
-      </div>
-    </div>
+      </div> */}
+      {data.length < 1 && (
+        <Loading />
+      )}
 
+      {data.map((item, idx) => (
+        <ToastNotification
+          caption={item}
+          title="hi there"
+          style={{ marginBottom: '.5rem' }}
+          kind={"info"}
+        />
+      ))}
+
+    </div>
   );
 }
 
