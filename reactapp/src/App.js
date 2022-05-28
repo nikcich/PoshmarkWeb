@@ -1,49 +1,83 @@
 import './App.css';
 import './Carb.scss';
+import './Charts.scss';
 
 import { useEffect, useState } from 'react';
+import { Loading, Modal, TextInput } from 'carbon-components-react';
 
-import { Button, Loading, ToastNotification } from 'carbon-components-react';
-
-import HeaderBar from './components/Header';
+import Table from './components/Table';
 
 function App() {
 
   const [data, setData] = useState([]);
+  const [auth, setAuth] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
-  const [page, setPage] = useState('/'); // Page route, '/' being root, '/PlanView' etc
+  const handleLogin = () => {
+    setLoading(true);
+
+    fetch('https://poshapi.cichosz.dev/api/login', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'body': JSON.stringify({
+          username: username,
+          password: password
+        })
+      },
+    }).then(data => {
+      setLoading(false);
+      if(data.status === 200){
+        setAuth(true);
+      }
+    });
+  }
 
   useEffect(() => {
-    fetch('http://localhost:5000/data').then((res) => res.json()).then((res) => {
-      setData(res.Labels);
-    });
+
   }, []);
 
   return (
     <div className='App'>
-      <HeaderBar page={page} setPage={setPage} />
-      {data.length < 1 && (
-        <Loading />
-      )}
 
+      {loading && <Loading />}
 
+      {auth &&
+        <Table />
+      }
 
-      {/* Conditional Rendering based on page */}
+      {!auth && (
+        <Modal
+          open={!loading}
+          modalHeading="Login"
+          modalLabel="Login to access the app"
+          primaryButtonText="Login"
+          onRequestSubmit={() => handleLogin()}
+        >
 
-      {page === "/Plan" && (
-        data.map((item, idx) => (
-          <ToastNotification
-            caption={item}
-            title="hi there"
-            style={{ marginBottom: '.5rem' }}
-            kind={"info"}
-            key={idx}
+          <TextInput
+            data-modal-primary-focus
+            id="username"
+            labelText="Username"
+            placeholder="Username"
+            onChange={(e) => {
+              setUsername(e.target.value);
+            }}
           />
-        ))
-      )}
 
-      {page === "/Data" && (
-        <h1> This is the Data View Page</h1>
+          <TextInput
+            id="password"
+            labelText="Password"
+            placeholder="Password"
+            type="password"
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+          />
+        </Modal>
       )}
 
 

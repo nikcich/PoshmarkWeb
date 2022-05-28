@@ -3,43 +3,31 @@ import { HeaderContainer, Header, HeaderMenuItem, HeaderNavigation, HeaderGlobal
 import im from './MKLogo.png'
 
 function HeaderBar(props) {
-
-    const { page, setPage } = props;
-
-    const buttonClick = (name) => {
-        console.log("Hello");
-    }
-
-    const navClick = (pg) => {
-        console.log(pg);
-        setPage(pg);
-    }
-
+    const {clickAdd, clickEdit, clickLocation, clickBundle} = props;
     return (
         <HeaderContainer
             render={({ }) => (
                 <>
                     <Header aria-label="IBM Platform Name" style={{ height: '4rem' }}>
 
-                        <img src={im} alt="" style={{ width: '9rem', marginLeft: '1rem' }}></img>
+                        <h2 style={{ marginLeft: '1rem' }}>Item Management</h2>
 
-                        <HeaderNavigation aria-label="MediaKind">
-                            <HeaderMenuItem href="#" isCurrentPage={page==='/Plan'} onClick={() => navClick('/Plan')}>Plan View</HeaderMenuItem>
-                            <HeaderMenuItem href="#" isCurrentPage={page==='/Data'} onClick={() => navClick('/Data')}>Data View</HeaderMenuItem>
-                        </HeaderNavigation>
+
                         <HeaderGlobalBar>
-                            <Button style={{ margin: '0.5rem' }}
-                                onClick={() => buttonClick("Import button")}
-                            >
-                                Import
+                            <Button style={{ margin: '0.5rem' }} onClick={() => clickAdd()}>
+                                Add Item
                             </Button>
-
+                            <Button style={{ margin: '0.5rem' }} onClick={() => clickEdit()}>
+                                Edit Selected
+                            </Button>
+                            <Button style={{ margin: '0.5rem' }} onClick={() => clickLocation()}>
+                                Add Location
+                            </Button>
+                            <Button style={{ margin: '0.5rem' }} onClick={() => clickBundle()}>
+                                Bundle Selected
+                            </Button>
                             <Button style={{ margin: '0.5rem' }}>
                                 Export
-                            </Button>
-
-                            <Button style={{ margin: '0.5rem' }}>
-                                Edit Mode
                             </Button>
 
                         </HeaderGlobalBar>

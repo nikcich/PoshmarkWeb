@@ -1,0 +1,11 @@
+@import '@carbon/themes/scss/themes';
+
+$carbon--theme: $carbon--theme--g100;
+
+@include carbon--theme();
+
+$ui-background: rgb(57,57,57);
+$ui-03: #4C4C4C;
+$ui-04: #8D8D8D;
+
+@import '@carbon/charts/styles/styles.scss';
